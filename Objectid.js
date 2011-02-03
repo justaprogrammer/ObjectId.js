@@ -10,50 +10,60 @@
 */
 
 /**
- * Utility object for converting between how WCF serializes a object of type MongoDB.Bson.ObjectId
+ * Javascript representation of how WCF serializes a object of type MongoDB.Bson.ObjectId
  * and the standard 24 character representation.
  */
-var ObjectId = {
-    /**
-     * Generates an empty object id.
-     * @returns an empty objectId, the equivilent of  ObjectId("000000000000000000000000")
-     */
-    emptyId: function () {
-        return {
-            timestamp: 0,
-            machine: 0,
-            pid: 0,
-            increment: 0
-        };
-    },
+var ObjectId = (function () {
+    var increment = 0;
+    return function () {
+        if (!(this instanceof ObjectId)) {
+            return new ObjectId(arguments[0], arguments[1], arguments[2], arguments[3]).toString();
+        }
 
-    /**
-     * Turns a string representation of a BSON ObjectId into a JSON object
-     * parsable by a .NET DataContractJsonSerializer.
-     * @param id string A string representation of an ObjectId.
-     * @see http://msdn.microsoft.com/en-us/library/system.runtime.serialization.json.datacontractjsonserializer.aspx
-     */
-    parse: function (id) {
-        return {
-            timestamp: Number('0x' + id.substr(0,8)),
-            machine:  Number('0x' + id.substr(8,6)),
-            pid:  Number('0x' + id.substr(14,4)),
-            increment:  Number('0x' + id.substr(18,6))
-        };
-    },
+        if (typeof (arguments[0]) == 'object') {
+            this.timestamp = arguments[0].timestamp;
+            this.machine = arguments[0].machine;
+            this.pid = arguments[0].pid;
+            this.increment = arguments[0].increment;
+        }
+        else if (typeof (arguments[0]) == 'string' && arguments[0].length == 24) {
+            this.timestamp = Number('0x' + arguments[0].substr(0, 8)),
+            this.machine = Number('0x' + arguments[0].substr(8, 6)),
+            this.pid = Number('0x' + arguments[0].substr(14, 4)),
+            this.increment = Number('0x' + arguments[0].substr(18, 6))
+        }
+        else if (arguments.length == 4 && arguments[0] != null) {
+            this.timestamp = arguments[0];
+            this.machine = arguments[1];
+            this.pid = arguments[2];
+            this.increment = arguments[3];
+        }
+        else {
+            this.timestamp = Math.floor(new Date().valueOf() / 1000);
+            this.machine = 0;
+            this.pid = 0;
+            this.increment = increment++;
+            if (increment > 0xfff) {
+                increment = 0;
+            }
+        }
+    };
+})();
 
-    /**
-     * Turns a WCF representation of a BSON ObjectId into a 24 character string representation.
-     */
-    stringify: function(objectId) {
-        var timestamp = objectId.timestamp.toString(16);
-	var machine = objectId.machine.toString(16);
-	var pid = objectId.pid.toString(16);
-	var increment = objectId.increment.toString(16);
-        return '00000000'.substr(0, 6 - timestamp.length) + timestamp + 
-               '000000'.substr(0, 6 - machine.length) + machine +
-               '0000'.substr(0, 4 - pid.length) + pid + 
-               '000000'.substr(0, 6 - increment.length) + increment;
-    }
-};
+ObjectId.prototype.getDate = function () {
+    return new Date(this.timestamp * 1000);
+}
 
+/**
+* Turns a WCF representation of a BSON ObjectId into a 24 character string representation.
+*/
+ObjectId.prototype.toString = function () {
+    var timestamp = this.timestamp.toString(16);
+    var machine = this.machine.toString(16);
+    var pid = this.pid.toString(16);
+    var increment = this.increment.toString(16);
+    return '00000000'.substr(0, 6 - timestamp.length) + timestamp +
+           '000000'.substr(0, 6 - machine.length) + machine +
+           '0000'.substr(0, 4 - pid.length) + pid +
+           '000000'.substr(0, 6 - increment.length) + increment;
+}
