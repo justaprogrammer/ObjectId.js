@@ -10,8 +10,8 @@
 */
 
 /**
- * Javascript representation of how WCF serializes a object of type MongoDB.Bson.ObjectId
- * and the standard 24 character representation.
+ * Javascript class that mimics how WCF serializes a object of type MongoDB.Bson.ObjectId
+ * and conerts between that format and the standard 24 character representation.
  */
 var ObjectId = (function () {
     var increment = 0;
