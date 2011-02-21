@@ -5,16 +5,41 @@
 * and GPL (http://www.opensource.org/licenses/gpl-license.php) version 2 licenses.
 * This software is not distributed under version 3 or later of the GPL.
 *
-* Version 0.2.0
+* Version 1.0.0-RC1
 *
 */
 
 /**
- * Javascript representation of how WCF serializes a object of type MongoDB.Bson.ObjectId
- * and the standard 24 character representation.
- */
+* Javascript representation of how WCF serializes a object of type MongoDB.Bson.ObjectId
+* and the standard 24 character representation.
+*/
 var ObjectId = (function () {
     var increment = 0;
+    var pid = Math.floor(Math.random() * (32767));
+    var machine = Math.floor(Math.random() * (16777216));
+
+    if (typeof (localStorage) != 'undefined') {
+        var mongoMachineId = parseInt(localStorage['mongoMachineId']);
+        if (mongoMachineId >= 0 && mongoMachineId <= 16777215) {
+            machine = Math.floor(localStorage['mongoMachineId']);
+        }
+        // Just always stick the value in.
+        localStorage['mongoMachineId'] = machine;
+        document.cookie = 'mongoMachineId=' + machine + ';expires=Tue, 19 Jan 2038 05:00:00 GMT'
+    }
+    else {
+        var cookieList = document.cookie.split('; ');
+        for (var i in cookieList) {
+            var cookie = cookieList[i].split('=');
+            if (cookie[0] == 'mongoMachineId' && cookie[1] >= 0 && cookie[1] <= 16777215) {
+                machine = cookie[1];
+                break;
+            }
+        }
+        document.cookie = 'mongoMachineId=' + machine + ';expires=Tue, 19 Jan 2038 05:00:00 GMT';
+
+    }
+
     return function () {
         if (!(this instanceof ObjectId)) {
             return new ObjectId(arguments[0], arguments[1], arguments[2], arguments[3]).toString();
@@ -40,12 +65,13 @@ var ObjectId = (function () {
         }
         else {
             this.timestamp = Math.floor(new Date().valueOf() / 1000);
-            this.machine = 0;
-            this.pid = 0;
-            this.increment = increment++;
-            if (increment > 0xfff) {
+            this.machine = machine;
+            this.pid = pid;
+            if (increment > 0xffffff) {
                 increment = 0;
             }
+            this.increment = increment++;
+
         }
     };
 })();
