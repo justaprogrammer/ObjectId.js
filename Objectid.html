@@ -1,0 +1,37 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>ObjectId Test Page</title>
+    <script type="text/javascript" src="Objectid.js"></script>
+</head>
+<body>
+    <form method="post" action="Objectid.html" onsubmit="return false;">
+        <p><label>Timestamp</label><input type="text" id="timeStamp" size="60" /></p>
+        <p><label>Machine</label><input type="text" id="machine" size="50" /></p>
+        <p><label>Pid</label><input type="text" id="pid" size="50" /></p>
+        <p><label>Increment</label><input type="text" id="increment" size="50" /></p>
+        <p><input type="button" value="Generate new Id" onclick="generateNewId()"/></p>
+    </form>
+    <span id="rawObject"></span>
+    <script type="text/javascript">
+        function generateNewId() {
+            var objectId = new ObjectId();
+            document.getElementById("timeStamp").value = objectId.getDate();
+            document.getElementById("machine").value = objectId.machine;
+            document.getElementById("pid").value = objectId.pid;
+            document.getElementById("increment").value = objectId.increment;
+            if (typeof (JSON) == 'object' && typeof (JSON.stringify) == 'function') {
+                var txtNode = document.createTextNode('Raw: ');
+                var element = document.createElement('pre').appendChild(document.createTextNode(JSON.stringify(objectId)));
+                var rawObject = document.getElementById("rawObject");
+                while (rawObject.childNodes.length > 0) {
+                    rawObject.removeChild(rawObject.childNodes[0]);
+                }
+                rawObject.appendChild(txtNode);
+                rawObject.appendChild(element);
+            }
+        }
+    </script>
+</body>
+</html>
