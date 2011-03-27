@@ -5,7 +5,7 @@
 * and GPL (http://www.opensource.org/licenses/gpl-license.php) version 2 licenses.
 * This software is not distributed under version 3 or later of the GPL.
 *
-* Version 1.0.0-RC1
+* Version 1.0.0
 *
 */
 
