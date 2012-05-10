@@ -40,7 +40,7 @@ var ObjectId = (function () {
 
     }
 
-    return function () {
+    function ObjId() {
         if (!(this instanceof ObjectId)) {
             return new ObjectId(arguments[0], arguments[1], arguments[2], arguments[3]).toString();
         }
@@ -73,23 +73,25 @@ var ObjectId = (function () {
             this.increment = increment++;
 
         }
-    };
+    }
+
+    ObjId.prototype.getDate = function () {
+        return new Date(this.timestamp * 1000);
+    }
+
+    /**
+     * Turns a WCF representation of a BSON ObjectId into a 24 character string representation.
+     */
+    ObjId.prototype.toString = function () {
+        var timestamp = this.timestamp.toString(16);
+        var machine = this.machine.toString(16);
+        var pid = this.pid.toString(16);
+        var increment = this.increment.toString(16);
+        return '00000000'.substr(0, 6 - timestamp.length) + timestamp +
+            '000000'.substr(0, 6 - machine.length) + machine +
+            '0000'.substr(0, 4 - pid.length) + pid +
+            '000000'.substr(0, 6 - increment.length) + increment;
+    }
+
+    return ObjId;
 })();
-
-ObjectId.prototype.getDate = function () {
-    return new Date(this.timestamp * 1000);
-}
-
-/**
-* Turns a WCF representation of a BSON ObjectId into a 24 character string representation.
-*/
-ObjectId.prototype.toString = function () {
-    var timestamp = this.timestamp.toString(16);
-    var machine = this.machine.toString(16);
-    var pid = this.pid.toString(16);
-    var increment = this.increment.toString(16);
-    return '00000000'.substr(0, 6 - timestamp.length) + timestamp +
-           '000000'.substr(0, 6 - machine.length) + machine +
-           '0000'.substr(0, 4 - pid.length) + pid +
-           '000000'.substr(0, 6 - increment.length) + increment;
-}
