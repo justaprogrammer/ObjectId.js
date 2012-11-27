@@ -1,9 +1,11 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
 "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
+
 <head>
     <title>ObjectId Test Page</title>
     <script type="text/javascript" src="Objectid.js"></script>
+    <meta name="copyright" CONTENT="&copy; 2011 Justin Dearing">
 </head>
 <body>
     <form method="post" action="Objectid.html" onsubmit="return false;">
@@ -14,6 +16,8 @@
         <p><input type="button" value="Generate new Id" onclick="generateNewId()"/></p>
     </form>
     <span id="rawObject"></span>
+    <hr/>
+    <div id="copyrightNotice">Copyright 2011 <a href="mailto:zippy1981@gmail.com">Justin Dearing</a> Licensed under both the <a href="MIT.License.md">MIT License<a> and <a href="GPL-v2.License.md">GPL v2 License<a></div>
     <script type="text/javascript">
         function generateNewId() {
             var objectId = new ObjectId();
