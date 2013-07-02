@@ -67,11 +67,10 @@ var ObjectId = (function () {
             this.timestamp = Math.floor(new Date().valueOf() / 1000);
             this.machine = machine;
             this.pid = pid;
+            this.increment = increment++;
             if (increment > 0xffffff) {
                 increment = 0;
             }
-            this.increment = increment++;
-
         }
     };
 })();
