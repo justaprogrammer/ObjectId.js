@@ -80,6 +80,15 @@ ObjectId.prototype.getDate = function () {
     return new Date(this.timestamp * 1000);
 }
 
+ObjectId.prototype.toArray = function () {
+    var strOid = this.toString();
+    var array = new Array();
+    for(var i = 0; i < 12; i++) {
+        array[i] = parseInt(strOid.slice(i*2, i*2+1), 16);
+    }
+    return array;
+}
+
 /**
 * Turns a WCF representation of a BSON ObjectId into a 24 character string representation.
 */
