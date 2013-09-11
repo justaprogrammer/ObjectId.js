@@ -67,11 +67,10 @@ var ObjectId = (function () {
             this.timestamp = Math.floor(new Date().valueOf() / 1000);
             this.machine = machine;
             this.pid = pid;
+            this.increment = increment++;
             if (increment > 0xffffff) {
                 increment = 0;
             }
-            this.increment = increment++;
-
         }
     };
 })();
@@ -97,7 +96,7 @@ ObjectId.prototype.toString = function () {
     var machine = this.machine.toString(16);
     var pid = this.pid.toString(16);
     var increment = this.increment.toString(16);
-    return '00000000'.substr(0, 6 - timestamp.length) + timestamp +
+    return '00000000'.substr(0, 8 - timestamp.length) + timestamp +
            '000000'.substr(0, 6 - machine.length) + machine +
            '0000'.substr(0, 4 - pid.length) + pid +
            '000000'.substr(0, 6 - increment.length) + increment;
