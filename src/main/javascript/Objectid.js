@@ -77,7 +77,7 @@ var ObjectId = (function () {
 
 ObjectId.prototype.getDate = function () {
     return new Date(this.timestamp * 1000);
-}
+};
 
 ObjectId.prototype.toArray = function () {
     var strOid = this.toString();
@@ -101,4 +101,4 @@ ObjectId.prototype.toString = function () {
            '000000'.substr(0, 6 - machine.length) + machine +
            '0000'.substr(0, 4 - pid.length) + pid +
            '000000'.substr(0, 6 - increment.length) + increment;
-}
+};
