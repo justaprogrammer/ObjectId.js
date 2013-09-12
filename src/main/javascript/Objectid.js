@@ -40,7 +40,7 @@ var ObjectId = (function () {
 
     }
 
-    return function () {
+    function ObjId() {
         if (!(this instanceof ObjectId)) {
             return new ObjectId(arguments[0], arguments[1], arguments[2], arguments[3]).toString();
         }
@@ -73,6 +73,7 @@ var ObjectId = (function () {
             }
         }
     };
+    return ObjId;
 })();
 
 ObjectId.prototype.getDate = function () {
