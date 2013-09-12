@@ -87,7 +87,7 @@ ObjectId.prototype.toArray = function () {
         array[i] = parseInt(strOid.slice(i*2, i*2+2), 16);
     }
     return array;
-}
+};
 
 /**
 * Turns a WCF representation of a BSON ObjectId into a 24 character string representation.
