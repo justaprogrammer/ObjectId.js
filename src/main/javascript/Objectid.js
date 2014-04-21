@@ -6,6 +6,9 @@
 * This software is not distributed under version 3 or later of the GPL.
 *
 * Version 1.0.1-dev
+
+* Changes made by Jonathan Häberle (jonathan.haeberle@gmail.com)
+* Published to BPM for browserify-usage
 *
 */
 
@@ -103,3 +106,6 @@ ObjectId.prototype.toString = function () {
            '0000'.substr(0, 4 - pid.length) + pid +
            '000000'.substr(0, 6 - increment.length) + increment;
 };
+
+module.exports = ObjectId;
+

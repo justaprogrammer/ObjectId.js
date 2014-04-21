@@ -1,0 +1,22 @@
+{
+  "name": "ObjectId-browser",
+  "version": "0.0.1",
+  "author": "Jonathan Häberle <jonathan.haeberle@gmail.com>",
+  "description": "A browser implementation of MongoDB's ObjectId for browserify",
+  "contributors": [{
+      "name": "Justin Dearing",
+      "email": "zippy1981@gmail.com"
+  }],
+  "main": "./src/main/javascript/Objectid.js",
+  "keywords": [
+    "ObjectId",
+    "mongodb",
+    "browserify"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dreampulse/ObjectId.js"
+  },
+  "license": "MIT"
+}
+
