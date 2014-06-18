@@ -1,0 +1,22 @@
+{
+  "name": "Objectid",
+  "version": "1.0.0",
+  "main": "src/main/javascript/Objectid.js",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "build",
+    "speed",
+    "test",
+    "*.md",
+    "*.txt",
+    "*.html",
+    "*.xml"
+  ],
+  "devDependencies": {
+  },
+  "keywords": [
+    "mongo",
+    "objectid"
+  ]
+}
