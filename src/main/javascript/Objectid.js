@@ -1,11 +1,11 @@
 /*
 *
-* Copyright (c) 2011 Justin Dearing (zippy1981@gmail.com)
+* Copyright (c) 2011-2014- Justin Dearing (zippy1981@gmail.com)
 * Dual licensed under the MIT (http://www.opensource.org/licenses/mit-license.php)
 * and GPL (http://www.opensource.org/licenses/gpl-license.php) version 2 licenses.
 * This software is not distributed under version 3 or later of the GPL.
 *
-* Version 1.0.1-dev
+* Version 1.0.2
 *
 */
 

@@ -4,7 +4,7 @@ LocalStorage with a fallback to cookies. Something like
 evercookie could be used to make a more persistant machineId.
 However, this is not the intention of this implementation.
 
-Copyright 2011 Justin Dearing <zippy1981@gmail.com> 
+Copyright 2011-2014 Justin Dearing <zippy1981@gmail.com> 
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License

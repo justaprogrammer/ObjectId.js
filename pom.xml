@@ -15,7 +15,7 @@
       <plugin>
         <groupId>com.github.searls</groupId>
         <artifactId>jasmine-maven-plugin</artifactId>
-        <version>1.3.1.2</version>
+        <version>1.3.1.5</version>
         <executions>
           <execution>
             <goals>
@@ -23,6 +23,29 @@
             </goals>
           </execution>
         </executions>
+        <configuration>
+          <keepServerAlive>true</keepServerAlive>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>com.github.timurstrekalov</groupId>
+        <artifactId>saga-maven-plugin</artifactId>
+        <version>1.5.3</version>
+        <executions>
+          <execution>
+            <phase>verify</phase>
+            <goals>
+              <goal>coverage</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <baseDir>http://localhost:${jasmine.serverPort}</baseDir>
+          <noInstrumentPatterns>
+            <pattern>/*_spec.js</pattern> <!-- Don't instrument specs -->
+          </noInstrumentPatterns>
+          <outputDir>${project.build.directory}/coverage</outputDir>
+        </configuration>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
