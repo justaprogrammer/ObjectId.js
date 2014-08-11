@@ -22,8 +22,9 @@ var ObjectId = (function () {
         var cookieList = document.cookie.split('; ');
         for (var i in cookieList) {
             var cookie = cookieList[i].split('=');
-            if (cookie[0] == 'mongoMachineId' && cookie[1] >= 0 && cookie[1] <= 16777215) {
-                machine = cookie[1];
+            var cookieMachineId = parseInt(cookie[1], 10);
+            if (cookie[0] == 'mongoMachineId' && cookieMachineId && cookieMachineId >= 0 && cookieMachineId <= 16777215) {
+                machine = cookieMachineId;
                 break;
             }
         }
