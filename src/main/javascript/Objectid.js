@@ -9,6 +9,8 @@
 *
 */
 
+if (!document) var document = { cookie: '' }; // fix crashes on node
+
 /**
  * Javascript class that mimics how WCF serializes a object of type MongoDB.Bson.ObjectId
  * and converts between that format and the standard 24 character representation.
@@ -94,6 +96,13 @@ ObjectId.prototype.toArray = function () {
 * Turns a WCF representation of a BSON ObjectId into a 24 character string representation.
 */
 ObjectId.prototype.toString = function () {
+    if (this.timestamp === undefined
+        || this.machine === undefined
+        || this.pid === undefined
+        || this.increment === undefined) {
+        return 'Invalid ObjectId';
+    }
+
     var timestamp = this.timestamp.toString(16);
     var machine = this.machine.toString(16);
     var pid = this.pid.toString(16);
