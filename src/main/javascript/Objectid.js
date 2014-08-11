@@ -18,15 +18,7 @@ var ObjectId = (function () {
     var pid = Math.floor(Math.random() * (32767));
     var machine = Math.floor(Math.random() * (16777216));
 
-    if (typeof (localStorage) != 'undefined') {
-        var mongoMachineId = parseInt(localStorage['mongoMachineId']);
-        if (mongoMachineId >= 0 && mongoMachineId <= 16777215) {
-            machine = Math.floor(localStorage['mongoMachineId']);
-        }
-        // Just always stick the value in.
-        localStorage['mongoMachineId'] = machine;
-    }
-    else {
+    var setMachineCookie = function() {
         var cookieList = document.cookie.split('; ');
         for (var i in cookieList) {
             var cookie = cookieList[i].split('=');
@@ -36,7 +28,21 @@ var ObjectId = (function () {
             }
         }
         document.cookie = 'mongoMachineId=' + machine + ';expires=Tue, 19 Jan 2038 05:00:00 GMT;path=/';
-
+    };
+    if (typeof (localStorage) != 'undefined') {
+        try {
+            var mongoMachineId = parseInt(localStorage['mongoMachineId']);
+            if (mongoMachineId >= 0 && mongoMachineId <= 16777215) {
+                machine = Math.floor(localStorage['mongoMachineId']);
+            }
+            // Just always stick the value in.
+            localStorage['mongoMachineId'] = machine;
+        } catch (e) {
+            setMachineCookie();
+        }
+    }
+    else {
+        setMachineCookie();
     }
 
     function ObjId() {
