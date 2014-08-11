@@ -25,7 +25,6 @@ var ObjectId = (function () {
         }
         // Just always stick the value in.
         localStorage['mongoMachineId'] = machine;
-        document.cookie = 'mongoMachineId=' + machine + ';expires=Tue, 19 Jan 2038 05:00:00 GMT'
     }
     else {
         var cookieList = document.cookie.split('; ');
@@ -36,7 +35,7 @@ var ObjectId = (function () {
                 break;
             }
         }
-        document.cookie = 'mongoMachineId=' + machine + ';expires=Tue, 19 Jan 2038 05:00:00 GMT';
+        document.cookie = 'mongoMachineId=' + machine + ';expires=Tue, 19 Jan 2038 05:00:00 GMT;path=/';
 
     }
 
