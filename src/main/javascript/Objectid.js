@@ -15,7 +15,7 @@
 */
 var ObjectId = (function () {
     var increment = 0;
-    var pid = Math.floor(Math.random() * (32767));
+    var pid = Math.floor(Math.random() * (65536));
     var machine = Math.floor(Math.random() * (16777216));
 
     if (typeof (localStorage) != 'undefined') {
