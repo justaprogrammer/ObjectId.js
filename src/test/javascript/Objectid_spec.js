@@ -68,7 +68,7 @@ describe('The ObjectId class',function(){
       }
     });
 
-    it('should use growing timwstamp values for subsequent ObjectId generations', function() {
+    it('should use growing timestamp values for subsequent ObjectId generations', function() {
       var objectIds = [];
       for (var i=0; i < 5; i++) {
         objectIds.push(new ObjectId());
