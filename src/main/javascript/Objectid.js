@@ -14,7 +14,7 @@
  * and converts between that format and the standard 24 character representation.
 */
 var ObjectId = (function () {
-    var increment = 0;
+    var increment = Math.floor(Math.random() * (16777216));
     var pid = Math.floor(Math.random() * (65536));
     var machine = Math.floor(Math.random() * (16777216));
 
