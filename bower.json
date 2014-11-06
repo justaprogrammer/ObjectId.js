@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "homepage": "https://github.com/DeadHeadRussell/ObjectId.js",
   "authors": [
+    "Justin Dearing <zippy1981@gmail.com>",
     "Andrew Russell <deadhead.russell@gmail.com>"
   ],
   "description": "A javascript implementation of a BSON ObjectId.",
