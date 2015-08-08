@@ -60,7 +60,6 @@ var ObjectId = (function () {
             this.increment = arguments[0].increment;
         }
         else if (typeof (arguments[0]) === 'string' && arguments[0].length === 24) {
-            debugger;
             this.timestamp = Number('0x' + arguments[0].substr(0, 8));
             this.machine = Number('0x' + arguments[0].substr(8, 6));
             this.pid = Number('0x' + arguments[0].substr(14, 4));
