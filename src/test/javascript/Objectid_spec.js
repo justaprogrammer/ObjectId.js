@@ -1,3 +1,5 @@
+var ObjectId = require('../../main/javascript/Objectid');
+
 describe('The ObjectId class',function(){
 
   beforeEach(function() {

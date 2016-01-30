@@ -9,6 +9,11 @@ install it via npm:
 npm install objectid-browser
 ```
 
+you can test it using npm
+```
+npm test
+```
+
 use browserify (http://browserify.org/)
 ```
 browserify ./your-fs-file.js -r objectid-broser:objectid -o ./outputfile.js
