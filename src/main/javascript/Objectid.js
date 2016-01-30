@@ -120,6 +120,6 @@ ObjectId.prototype.toString = function () {
 };
 
 // make tests pass on node
-if(module && module.exports){
+if(typeof module === 'object' && module.exports){
     module.exports = ObjectId;
 }
