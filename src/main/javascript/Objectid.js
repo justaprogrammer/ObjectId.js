@@ -1,46 +1,51 @@
 /*
 *
-* Copyright (c) 2011 Justin Dearing (zippy1981@gmail.com)
+* Copyright (c) 2011-2014- Justin Dearing (zippy1981@gmail.com)
 * Dual licensed under the MIT (http://www.opensource.org/licenses/mit-license.php)
 * and GPL (http://www.opensource.org/licenses/gpl-license.php) version 2 licenses.
 * This software is not distributed under version 3 or later of the GPL.
 *
-* Version 1.0.1-dev
-
-* Changes made by Jonathan Häberle (jonathan.haeberle@gmail.com)
-* Published to BPM for browserify-usage
+* Version 1.0.2
 *
 */
+
+if (!document) var document = { cookie: '' }; // fix crashes on node
 
 /**
  * Javascript class that mimics how WCF serializes a object of type MongoDB.Bson.ObjectId
  * and converts between that format and the standard 24 character representation.
 */
 var ObjectId = (function () {
-    var increment = 0;
-    var pid = Math.floor(Math.random() * (32767));
+    var increment = Math.floor(Math.random() * (16777216));
+    var pid = Math.floor(Math.random() * (65536));
     var machine = Math.floor(Math.random() * (16777216));
 
-    if (typeof (localStorage) != 'undefined') {
-        var mongoMachineId = parseInt(localStorage['mongoMachineId']);
-        if (mongoMachineId >= 0 && mongoMachineId <= 16777215) {
-            machine = Math.floor(localStorage['mongoMachineId']);
-        }
-        // Just always stick the value in.
-        localStorage['mongoMachineId'] = machine;
-        document.cookie = 'mongoMachineId=' + machine + ';expires=Tue, 19 Jan 2038 05:00:00 GMT'
-    }
-    else {
+    var setMachineCookie = function() {
         var cookieList = document.cookie.split('; ');
         for (var i in cookieList) {
             var cookie = cookieList[i].split('=');
-            if (cookie[0] == 'mongoMachineId' && cookie[1] >= 0 && cookie[1] <= 16777215) {
-                machine = cookie[1];
+            var cookieMachineId = parseInt(cookie[1], 10);
+            if (cookie[0] == 'mongoMachineId' && cookieMachineId && cookieMachineId >= 0 && cookieMachineId <= 16777215) {
+                machine = cookieMachineId;
                 break;
             }
         }
-        document.cookie = 'mongoMachineId=' + machine + ';expires=Tue, 19 Jan 2038 05:00:00 GMT';
-
+        document.cookie = 'mongoMachineId=' + machine + ';expires=Tue, 19 Jan 2038 05:00:00 GMT;path=/';
+    };
+    if (typeof (localStorage) != 'undefined') {
+        try {
+            var mongoMachineId = parseInt(localStorage['mongoMachineId']);
+            if (mongoMachineId >= 0 && mongoMachineId <= 16777215) {
+                machine = Math.floor(localStorage['mongoMachineId']);
+            }
+            // Just always stick the value in.
+            localStorage['mongoMachineId'] = machine;
+        } catch (e) {
+            setMachineCookie();
+        }
+    }
+    else {
+        setMachineCookie();
     }
 
     function ObjId() {
@@ -97,6 +102,13 @@ ObjectId.prototype.toArray = function () {
 * Turns a WCF representation of a BSON ObjectId into a 24 character string representation.
 */
 ObjectId.prototype.toString = function () {
+    if (this.timestamp === undefined
+        || this.machine === undefined
+        || this.pid === undefined
+        || this.increment === undefined) {
+        return 'Invalid ObjectId';
+    }
+
     var timestamp = this.timestamp.toString(16);
     var machine = this.machine.toString(16);
     var pid = this.pid.toString(16);
@@ -106,6 +118,3 @@ ObjectId.prototype.toString = function () {
            '0000'.substr(0, 4 - pid.length) + pid +
            '000000'.substr(0, 6 - increment.length) + increment;
 };
-
-module.exports = ObjectId;
-
